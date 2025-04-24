@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleships Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="battleship.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>Battleships</h1>
+            <a href="index.html" class="home-button">Back to Home</a>
+        </header>
+        
+        <div class="setup-container">
+            <div class="grid-setup">
+                <h3>Choose your grid size:</h3>
+                <div class="grid-options">
+                    <label><input type="radio" name="grid-size" value="10" checked> 10 X 10</label>
+                    <label><input type="radio" name="grid-size" value="11"> 11 X 11</label>
+                    <label><input type="radio" name="grid-size" value="12"> 12 X 12</label>
+                    <label><input type="radio" name="grid-size" value="13"> 13 X 13</label>
+                    <label><input type="radio" name="grid-size" value="14"> 14 X 14</label>
+                    <label><input type="radio" name="grid-size" value="15"> 15 X 15</label>
+                </div>
+            </div>
+
+            <div class="ship-setup">
+                <h3>Please choose numbers of battleships</h3>
+                <div class="ship-inputs">
+                    <div class="ship-input">
+                        <label>Battleship size 2:</label>
+                        <input type="number" min="1" value="1">
+                    </div>
+                    <div class="ship-input">
+                        <label>Battleship size 3:</label>
+                        <input type="number" min="1" value="1">
+                    </div>
+                    <div class="ship-input">
+                        <label>Battleship size 4:</label>
+                        <input type="number" min="1" value="1">
+                    </div>
+                    <div class="ship-input">
+                        <label>Battleship size 5:</label>
+                        <input type="number" min="1" value="1">
+                    </div>
+                </div>
+                <button id="start-game">Start Game</button>
+            </div>
+        </div>
+
+        <div class="game-boards">
+            <div class="game-grid"></div>
+            <div class="ship-status">
+                <h3>Number of remaining battle-ships:</h3>
+                <table>
+                    <tr><td>Sub type 2</td><td>1</td></tr>
+                    <tr><td>Sub type 3</td><td>1</td></tr>
+                    <tr><td>Sub type 4</td><td>1</td></tr>
+                    <tr><td>Sub type 5</td><td>1</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
