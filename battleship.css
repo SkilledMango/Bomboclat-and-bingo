@@ -56,11 +56,6 @@ header {
     height: 400px;
 }
 
-.game-grid div {
-    background-color: #eee;
-    border: 1px solid #999;
-    aspect-ratio: 1;
-}
 
 .ship-status {
     border: 1px solid #000;
@@ -89,4 +84,19 @@ header {
 
 #start-game:hover {
     background-color: #45a049;
+}
+/* cell styling */
+.grid-cell {
+    background-color: #ada9a9;  
+    border: 1px solid #000;     /* black border to separate cells */
+    aspect-ratio: 1; 
+    cursor: pointer; 
+}
+.grid-cell:hover {
+    background-color: #666666;  /* slightly darker gray on hover */
+}
+/* ship styling */
+.ship {
+    background-color: #ff0000;  
+    opacity: 0.8;               
 }
