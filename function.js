@@ -28,8 +28,23 @@ export function validateShipSetup(ships, gridSize) {
 // Keep track of placed ships and their remaining hits
 let ships = []; // Array of ship objects with their positions and hits
 let remainingShips = new Map(); // Maps ship sizes to count of remaining ships
+let maxLives = 15; // Default max lives
+let currentLives = maxLives;
+
+const difficultyLives = {
+    easy: 15,
+    medium: 12,
+    hard: 8,
+    extreme: 5
+};
 
 export function placeShipsOnGrid(shipCounts, gridSize, gameGrid) {
+    // Set lives based on difficulty
+    const selectedDifficulty = document.querySelector('input[name="difficulty"]:checked').value;
+    maxLives = difficultyLives[selectedDifficulty];
+    currentLives = maxLives;
+    updateLivesDisplay();
+
     ships = [];
     remainingShips.clear();
     const occupiedCells = new Set();
@@ -91,6 +106,52 @@ export function placeShipsOnGrid(shipCounts, gridSize, gameGrid) {
     return { ships, remainingShips };
 }
 
+function updateLivesDisplay() {
+    const livesCount = document.getElementById('lives-count');
+    const healthFill = document.querySelector('.health-fill');
+    
+    livesCount.textContent = currentLives;
+    const healthPercent = (currentLives / maxLives) * 100;
+    healthFill.style.width = `${healthPercent}%`;
+
+    // Change health bar color based on remaining health
+    if (healthPercent > 60) {
+        healthFill.style.background = 'linear-gradient(90deg, #4CAF50, #45a049)';
+    } else if (healthPercent > 30) {
+        healthFill.style.background = 'linear-gradient(90deg, #ffc107, #ff9800)';
+    } else {
+        healthFill.style.background = 'linear-gradient(90deg, #ff4747, #ff0000)';
+    }
+}
+
+function showGameOver() {
+    const overlay = document.getElementById('gameover-overlay');
+    const gameoverSound = document.getElementById('gameover-sound');
+    overlay.classList.remove('hidden');
+    gameoverSound.play();
+
+    // Add click handler to close overlay
+    overlay.onclick = () => {
+        hideGameOver();
+        const resetButton = document.getElementById('reset-game');
+        if (resetButton) {
+            resetButton.click();
+        }
+    };
+}
+
+function hideGameOver() {
+    const overlay = document.getElementById('gameover-overlay');
+    overlay.classList.add('hidden');
+    // Remove click handler
+    overlay.onclick = null;
+}
+
+export function resetGame() {
+    hideGameOver();
+    resetLives();
+}
+
 export function handleCellClick(cell, position) {
     if (cell.classList.contains('hit') || cell.classList.contains('miss')) {
         return null;
@@ -102,13 +163,15 @@ export function handleCellClick(cell, position) {
         const ship = ships.find(s => s.id === parseInt(shipId));
         ship.hits++;
 
-        // Only decrease remaining ships count when all parts of the ship are hit
         if (ship.hits === ship.size) {
             const remaining = remainingShips.get(ship.size);
             if (remaining > 0) {
                 remainingShips.set(ship.size, remaining - 1);
 
-                // Change all cells of the destroyed ship to show crying dog
+                const explosionSound = document.getElementById('explosion-sound');
+                explosionSound.currentTime = 0;
+                explosionSound.play();
+
                 document.querySelectorAll(`.grid-cell[data-ship-id="${shipId}"]`).forEach(shipCell => {
                     shipCell.classList.add('ship-destroyed');
                 });
@@ -116,11 +179,23 @@ export function handleCellClick(cell, position) {
                 return ship.size;
             }
         }
-        return null; // Return null if ship is hit but not destroyed
+        return null;
     } else {
         cell.classList.add('miss');
+        currentLives--;
+        updateLivesDisplay();
+
+        if (currentLives <= 0) {
+            showGameOver();
+        }
         return null;
     }
+}
+
+// Add this to your exports
+export function resetLives() {
+    currentLives = maxLives;
+    updateLivesDisplay();
 }
 
 export function getRemainingShips() {

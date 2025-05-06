@@ -9,6 +9,13 @@
     <script src="battleship.js" type="module" defer></script>
 </head>
 <body>
+<audio id="explosion-sound" src="missile-explosion-168600.mp3" preload="auto"></audio>
+<audio id="gameover-sound" src="wompwomp.mp3" preload="auto"></audio>
+
+<div id="gameover-overlay" class="gameover-overlay hidden">
+    <img src="gameover.png" alt="Game Over">
+</div>
+
 <nav class="navbar">
     <ul>
         <li><a href="index.html">Home</a></li>
@@ -29,6 +36,23 @@
                 <label><input type="radio" name="grid-size" value="13"> 13 X 13</label>
                 <label><input type="radio" name="grid-size" value="14"> 14 X 14</label>
                 <label><input type="radio" name="grid-size" value="15"> 15 X 15</label>
+            </div>
+        </div>
+
+        <div class="difficulty-setup">
+            <h3>Choose difficulty:</h3>
+            <div class="difficulty-options">
+                <input type="radio" name="difficulty" value="easy" id="easy" checked>
+                <label for="easy">Easy (15 Lives)</label>
+                
+                <input type="radio" name="difficulty" value="medium" id="medium">
+                <label for="medium">Medium (12 Lives)</label>
+                
+                <input type="radio" name="difficulty" value="hard" id="hard">
+                <label for="hard">Hard (8 Lives)</label>
+                
+                <input type="radio" name="difficulty" value="extreme" id="extreme">
+                <label for="extreme">Extreme (5 Lives)</label>
             </div>
         </div>
 
@@ -61,6 +85,13 @@
                 <button id="reset-game" style="display: none;">Reset Game</button>
             </div>
         </div>
+    </div>
+
+    <div id="health-container">
+        <div class="health-bar">
+            <div class="health-fill"></div>
+        </div>
+        <div class="lives-text">Lives: <span id="lives-count">15</span></div>
     </div>
 
     <div class="game-boards">

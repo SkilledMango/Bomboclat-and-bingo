@@ -1,4 +1,4 @@
-import {createGrid, getShipCounts, validateShipSetup, placeShipsOnGrid, handleCellClick} from './function.js';
+import {createGrid, getShipCounts, validateShipSetup, placeShipsOnGrid, handleCellClick, resetLives} from './function.js';
 
 const gridOptions = document.querySelectorAll('input[name="grid-size"]');
 const shipInputs = document.querySelectorAll('.ship-input input');
@@ -96,4 +96,5 @@ resetButton.addEventListener('click', () => {
     const defaultSize = 10;
     createGrid(defaultSize, gameGrid);
     document.querySelector('input[name="grid-size"][value="10"]').checked = true;
+    resetLives(); // Reset lives when game is reset
 });
