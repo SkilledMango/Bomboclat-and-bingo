@@ -28,14 +28,14 @@ export function validateShipSetup(ships, gridSize) {
 // Keep track of placed ships and their remaining hits
 let ships = []; // Array of ship objects with their positions and hits
 let remainingShips = new Map(); // Maps ship sizes to count of remaining ships
-let maxLives = 15; // Default max lives
+let maxLives = 25; // Default max lives
 let currentLives = maxLives;
 
 const difficultyLives = {
-    easy: 15,
-    medium: 12,
-    hard: 8,
-    extreme: 5
+    easy: 65,
+    medium: 45,
+    hard: 25,
+    extreme: 15
 };
 
 export function placeShipsOnGrid(shipCounts, gridSize, gameGrid) {
