@@ -1,13 +1,22 @@
 body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://as1.ftcdn.net/v2/jpg/02/59/21/32/1000_F_259213266_ElWApwlAwECGg0QsGZBDckEOkEcW3C68.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: Arial, sans-serif;
     text-align: center;
     direction: rtl;
-    background-color: #f0f8ff;
+    padding-top: 60px;
 }
 
 h1 {
     margin-top: 20px;
-    color: #333;
+    color: #1e3c72;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 #game-container {
@@ -41,22 +50,83 @@ h1 {
 
 #controls {
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
-#draw-button {
-    padding: 10px 20px;
-    font-size: 16px;
+#draw-button, #reset-button {
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #1e3c72, #2a5298);
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#draw-button:hover, #reset-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+#draw-button:active, #reset-button:active {
+    transform: scale(1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 #message {
-    color: red;
+    color: #d9534f;
     font-weight: bold;
-    margin-top: 10px;
+    font-size: 1.2rem;
+    margin-top: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 #drawn-number {
-    font-size: 18px;
+    font-size: 1.5rem;
     color: #004080;
-    margin-top: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.navbar {
+    background-color: #1e3c72;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.navbar li {
+    display: inline;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: lightblue;
 }

@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const boardSize = 5; // 5x5 Bingo board
-    const maxNumber = 75; // Numbers range from 1 to 75
+    const boardSize = 5;
+    const maxNumber = 75;
     const bingoBoard = document.getElementById("bingo-board");
     const drawButton = document.getElementById("draw-button");
+    const resetButton = document.getElementById("reset-button");
     const drawnNumberElement = document.getElementById("drawn-number");
     const messageElement = document.getElementById("message");
 
     let drawnNumbers = new Set();
     let boardNumbers = [];
 
-    // Generate the Bingo board
     function generateBoard() {
+        bingoBoard.innerHTML = "";
         const numbers = Array.from({ length: maxNumber }, (_, i) => i + 1);
         shuffleArray(numbers);
-
         boardNumbers = numbers.slice(0, boardSize * boardSize);
         let index = 0;
 
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Shuffle an array (Fisher-Yates algorithm)
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -38,10 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Draw a random number
     function drawNumber() {
         if (drawnNumbers.size >= maxNumber) {
-            messageElement.textContent = "כל המספרים כבר הוגרלו!";
+            messageElement.textContent = "All numbers have been drawn!";
             return;
         }
 
@@ -51,11 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } while (drawnNumbers.has(number));
 
         drawnNumbers.add(number);
-        drawnNumberElement.textContent = `המספר שהוגרל: ${number}`;
+        drawnNumberElement.textContent = `Drawn number: ${number}`;
         highlightNumber(number);
+        checkWinner();
     }
 
-    // Highlight the drawn number on the board
     function highlightNumber(number) {
         const cells = bingoBoard.querySelectorAll("td");
         cells.forEach(cell => {
@@ -65,7 +63,40 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Initialize the game
+    function checkWinner() {
+        const rows = bingoBoard.querySelectorAll("tr");
+        for (let i = 0; i < boardSize; i++) {
+            const row = rows[i].querySelectorAll("td");
+            if (Array.from(row).every(cell => cell.classList.contains("marked"))) {
+                alert("You have a full row! You win!");
+                return;
+            }
+        }
+
+        for (let i = 0; i < boardSize; i++) {
+            let columnMarked = true;
+            for (let j = 0; j < boardSize; j++) {
+                const cell = rows[j].querySelectorAll("td")[i];
+                if (!cell.classList.contains("marked")) {
+                    columnMarked = false;
+                    break;
+                }
+            }
+            if (columnMarked) {
+                alert("You have a full column! You win!");
+                return;
+            }
+        }
+    }
+
+    function resetGame() {
+        drawnNumbers.clear();
+        drawnNumberElement.textContent = "Drawn number";
+        messageElement.textContent = "";
+        generateBoard();
+    }
+
     generateBoard();
     drawButton.addEventListener("click", drawNumber);
+    resetButton.addEventListener("click", resetGame);
 });

@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>משחק בינגו</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Game</title>
     <link rel="stylesheet" href="Bingo.css">
+    <script src="Bingo.js" defer></script>
 </head>
 <body>
-    <h1>ברוך הבא למשחק הבינגו!</h1>
+<nav class="navbar">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="Battleships.html">Battleships</a></li>
+        <li><a href="Bingo.html">Bingo</a></li>
+    </ul>
+</nav>
+
+<div class="game-container">
+    <h1 class="page-title">Welcome to the Bingo Game</h1>
     <div id="game-container">
         <table id="bingo-board"></table>
         <div id="controls">
-            <button id="draw-button">הגרלה</button>
-            <p id="drawn-number">המספר שהוגרל: -</p>
+            <button id="draw-button">Draw</button>
+            <button id="reset-button">Reset</button>
+            <p id="drawn-number">:Drawn Number</p>
             <p id="message"></p>
         </div>
     </div>
-    <script src="Bingo.js"></script>
+</div>
 </body>
 </html>
