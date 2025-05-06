@@ -25,11 +25,23 @@ export function validateShipSetup(ships, gridSize) {
     return totalShipCells <= maxAllowedCells;
 }
 
-export function placeShipsOnGrid(ships, gridSize, gameGrid) {
+// Keep track of placed ships and their remaining hits
+let ships = []; // Array of ship objects with their positions and hits
+let remainingShips = new Map(); // Maps ship sizes to count of remaining ships
+
+export function placeShipsOnGrid(shipCounts, gridSize, gameGrid) {
+    ships = [];
+    remainingShips.clear();
     const occupiedCells = new Set();
 
-    ships.forEach(ship => {
-        for (let i = 0; i < ship.count; i++) {
+    // Initialize remaining ships
+    shipCounts.forEach(ship => {
+        remainingShips.set(ship.size, ship.count);
+    });
+
+    let shipId = 0;
+    shipCounts.forEach(shipCount => {
+        for (let i = 0; i < shipCount.count; i++) {
             let placed = false;
 
             while (!placed) {
@@ -38,7 +50,7 @@ export function placeShipsOnGrid(ships, gridSize, gameGrid) {
                 const direction = Math.random() < 0.5 ? 'horizontal' : 'vertical';
 
                 const shipCells = [];
-                for (let j = 0; j < ship.size; j++) {
+                for (let j = 0; j < shipCount.size; j++) {
                     const row = direction === 'horizontal' ? startRow : startRow + j;
                     const col = direction === 'horizontal' ? startCol + j : startCol;
 
@@ -49,17 +61,68 @@ export function placeShipsOnGrid(ships, gridSize, gameGrid) {
                     shipCells.push(`${row},${col}`);
                 }
 
-                if (shipCells.length === ship.size) {
-                    shipCells.forEach(cell => occupiedCells.add(cell));
+                if (shipCells.length === shipCount.size) {
+                    // Create a new ship object
+                    const ship = {
+                        id: shipId++,
+                        size: shipCount.size,
+                        positions: shipCells,
+                        hits: 0
+                    };
+                    ships.push(ship);
+
+                    shipCells.forEach(cell => {
+                        occupiedCells.add(cell);
+                    });
                     placed = true;
 
                     shipCells.forEach(cell => {
                         const [row, col] = cell.split(',').map(Number);
                         const cellIndex = row * gridSize + col;
-                        gameGrid.children[cellIndex].classList.add('ship');
+                        const gridCell = gameGrid.children[cellIndex];
+                        gridCell.classList.add('ship');
+                        gridCell.dataset.shipId = ship.id;
                     });
                 }
             }
         }
     });
+
+    return { ships, remainingShips };
+}
+
+export function handleCellClick(cell, position) {
+    if (cell.classList.contains('hit') || cell.classList.contains('miss')) {
+        return null;
+    }
+
+    const shipId = cell.dataset.shipId;
+    if (shipId !== undefined) {
+        cell.classList.add('hit');
+        const ship = ships.find(s => s.id === parseInt(shipId));
+        ship.hits++;
+
+        // Only decrease remaining ships count when all parts of the ship are hit
+        if (ship.hits === ship.size) {
+            const remaining = remainingShips.get(ship.size);
+            if (remaining > 0) {
+                remainingShips.set(ship.size, remaining - 1);
+
+                // Change all cells of the destroyed ship to show crying dog
+                document.querySelectorAll(`.grid-cell[data-ship-id="${shipId}"]`).forEach(shipCell => {
+                    shipCell.classList.add('ship-destroyed');
+                });
+
+                return ship.size;
+            }
+        }
+        return null; // Return null if ship is hit but not destroyed
+    } else {
+        cell.classList.add('miss');
+        return null;
+    }
+}
+
+export function getRemainingShips() {
+    return remainingShips;
 }

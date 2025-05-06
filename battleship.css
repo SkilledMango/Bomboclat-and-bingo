@@ -35,6 +35,7 @@ body {
 }
 
 .grid-cell {
+    position: relative;
     background-color: #444;
     border-radius: 6px;
     aspect-ratio: 1;
@@ -45,6 +46,58 @@ body {
 .grid-cell:hover {
     background-color: #666;
     transform: scale(1.1);
+}
+
+.grid-cell.hit {
+    position: relative;
+    background: url('./dog.webp') no-repeat center center;
+    background-size: cover;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* Base fire effect for hit ships */
+.grid-cell.hit::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('./Fire_GIF.gif') no-repeat center center;
+    background-size: contain;
+    mix-blend-mode: screen;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Override for destroyed ships - crying dog base image */
+.grid-cell.hit.ship-destroyed {
+    background: url('./crying\ dog.png') no-repeat center center;
+    background-size: cover;
+}
+
+/* Remove fire and add explosion for destroyed ships */
+.grid-cell.hit.ship-destroyed::after {
+    content: '';
+    position: absolute;
+    top: -25%;
+    left: -25%;
+    right: -25%;
+    bottom: -25%;
+    background: url('./smoke.gif') no-repeat center center;
+    background-size: 100% 100%;
+    opacity: 1;
+    mix-blend-mode: lighten;
+    z-index: 2;
+    transform: scale(1.25);
+}
+
+.grid-cell.miss {
+    background-color: #666;
+    transform: scale(0.95);
+    pointer-events: none;
 }
 
 .navbar {
@@ -197,4 +250,32 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.game-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.game-controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.game-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.game-controls #reset-game {
+    background-color: #f44336;
 }
