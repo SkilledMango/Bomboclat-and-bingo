@@ -47,7 +47,7 @@ h1.page-title {
     margin: 0 auto;
     table-layout: fixed;
     width: 100%;
-    max-width: 220px;
+    max-width: 320px;
     background: rgba(255,255,255,0.95);
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.10);
@@ -56,12 +56,12 @@ h1.page-title {
 #bingo-board td {
     text-align: center;
     vertical-align: middle;
-    width: 6vw;
-    max-width: 32px;
-    height: 3.2vw;
-    max-height: 3.2vw;
-    min-height: 2.5vw;
-    font-size: 2vw;
+    width: 8vw;
+    max-width: 44px;
+    height: 4vw;
+    max-height: 44px;
+    min-height: 3vw;
+    font-size: 2.4vw;
     min-width: 12px;
     border-radius: 6px;
     border: 1.5px solid #1e3c72;
@@ -187,11 +187,11 @@ h1.page-title {
         max-width: 98vw;
     }
     #bingo-board td {
-        width: 10vw;
-        height: 7vw;
-        max-height: 7vw;
-        min-height: 4vw;
-        font-size: 4vw;
+        width: 14vw;
+        height: 10vw;
+        max-height: 10vw;
+        min-height: 7vw;
+        font-size: 5vw;
     }
     h1.page-title {
         font-size: 8vw;
@@ -211,12 +211,15 @@ h1.page-title {
     .game-container {
         max-width: 800px;
     }
+    #bingo-board {
+        max-width: 420px;
+    }
     #bingo-board td {
-        max-width: 32px;
-        height: 2.7vw;
-        max-height: 2.7vw;
-        min-height: 2vw;
-        font-size: 1.5vw;
+        max-width: 54px;
+        height: 3.5vw;
+        max-height: 54px;
+        min-height: 2.5vw;
+        font-size: 2vw;
     }
     h1.page-title {
         font-size: 3vw;
