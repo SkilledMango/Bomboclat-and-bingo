@@ -5,6 +5,9 @@
 }
 
 body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     background: linear-gradient(135deg, #74ebd5, #acb6e5);
     color: #333;
     font-family: 'Roboto', sans-serif;
@@ -12,7 +15,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .container {
@@ -23,6 +26,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     text-align: center;
+    width: 95vw;
 }
 
 h1, p {
@@ -30,7 +34,8 @@ h1, p {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 6vw;
+    min-font-size: 1.5rem;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -40,6 +45,13 @@ p {
     color: #555;
 }
 
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .game-button {
     display: inline-block;
     padding: 15px 30px;
@@ -47,10 +59,15 @@ p {
     color: white;
     text-decoration: none;
     border-radius: 8px;
-    font-size: 1.2rem;
+    font-size: 4vw;
+    min-font-size: 1rem;
     font-weight: bold;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 40vw;
+    max-width: 180px;
+    min-width: 90px;
+    text-align: center;
 }
 
 .game-button:hover {
@@ -58,8 +75,32 @@ p {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.button-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+        max-width: 99vw;
+    }
+    h1 {
+        font-size: 8vw;
+    }
+    .game-button {
+        width: 80vw;
+        font-size: 6vw;
+    }
+    .button-container {
+        gap: 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 900px;
+    }
+    h1 {
+        font-size: 3vw;
+    }
+    .game-button {
+        max-width: 250px;
+        font-size: 2vw;
+    }
 }

@@ -147,6 +147,16 @@ function hideGameOver() {
     overlay.onclick = null;
 }
 
+function showWinScreen() {
+    const winOverlay = document.getElementById('win-overlay');
+    winOverlay.classList.remove('hidden');
+    winOverlay.onclick = () => {
+        winOverlay.classList.add('hidden');
+        const resetButton = document.getElementById('reset-game');
+        if (resetButton) resetButton.click();
+    };
+}
+
 export function resetGame() {
     hideGameOver();
     resetLives();
@@ -175,6 +185,12 @@ export function handleCellClick(cell, position) {
                 document.querySelectorAll(`.grid-cell[data-ship-id="${shipId}"]`).forEach(shipCell => {
                     shipCell.classList.add('ship-destroyed');
                 });
+
+                // Check for win
+                const allDestroyed = Array.from(remainingShips.values()).every(count => count === 0);
+                if (allDestroyed) {
+                    showWinScreen();
+                }
 
                 return ship.size;
             }
