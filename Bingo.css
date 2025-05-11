@@ -154,6 +154,7 @@ h1.page-title {
     top: 0;
     left: 0;
     z-index: 1000;
+    font-family: 'Roboto', Arial, sans-serif;
 }
 
 .navbar ul {
@@ -173,8 +174,10 @@ h1.page-title {
     text-decoration: none;
     color: white;
     font-size: 1.2rem;
+    font-family: 'Roboto', Arial, sans-serif;
     font-weight: bold;
     transition: color 0.3s ease;
+    letter-spacing: 0.5px;
 }
 
 .navbar a:hover {
