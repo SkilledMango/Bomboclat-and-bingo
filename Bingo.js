@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const boardSize = 5;
-    const maxNumber = 75;
+    const boardSize = 7;
+    const maxNumber = 100;
     const bingoBoard = document.getElementById("bingo-board");
     const drawButton = document.getElementById("draw-button");
     const resetButton = document.getElementById("reset-button");
@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let drawnNumbers = new Set();
     let boardNumbers = [];
+    let failClicks = 0;
+    let gameOver = false;
 
     function generateBoard() {
         bingoBoard.innerHTML = "";
@@ -23,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const cell = document.createElement("td");
                 cell.textContent = boardNumbers[index];
                 cell.dataset.number = boardNumbers[index];
+                cell.addEventListener("click", () => handleCellClick(cell));
                 row.appendChild(cell);
                 index++;
             }
@@ -38,29 +41,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function drawNumber() {
-        if (drawnNumbers.size >= maxNumber) {
-            messageElement.textContent = "All numbers have been drawn!";
+        if (drawnNumbers.size >= maxNumber || gameOver) {
+            messageElement.textContent = "כל המספרים הוגרלו או שהמשחק הסתיים!";
             return;
         }
-
         let number;
         do {
             number = Math.floor(Math.random() * maxNumber) + 1;
         } while (drawnNumbers.has(number));
-
         drawnNumbers.add(number);
-        drawnNumberElement.textContent = `Drawn number: ${number}`;
-        highlightNumber(number);
-        checkWinner();
+        drawnNumberElement.textContent = `המספר שהוגרל: ${number}`;
+        messageElement.textContent = "";
     }
 
-    function highlightNumber(number) {
-        const cells = bingoBoard.querySelectorAll("td");
-        cells.forEach(cell => {
-            if (parseInt(cell.dataset.number) === number) {
-                cell.classList.add("marked");
+    function handleCellClick(cell) {
+        if (gameOver) return;
+        const number = parseInt(cell.dataset.number);
+        if (!drawnNumbers.has(number)) {
+            failClicks++;
+            messageElement.textContent = `המספר לא הוגרל! (${failClicks}/3)`;
+            if (failClicks >= 3) {
+                messageElement.textContent = "נפסלת! לחצת 3 פעמים על מספרים שלא הוגרלו.";
+                gameOver = true;
             }
-        });
+            return;
+        }
+        if (cell.classList.contains("marked")) return;
+        cell.classList.add("marked");
+        cell.innerHTML = '<span style="color:red;font-size:1.5em;">&#10006;</span>';
+        checkWinner();
     }
 
     function checkWinner() {
@@ -68,11 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < boardSize; i++) {
             const row = rows[i].querySelectorAll("td");
             if (Array.from(row).every(cell => cell.classList.contains("marked"))) {
-                alert("You have a full row! You win!");
+                messageElement.textContent = "ניצחת! השלמת שורה.";
+                gameOver = true;
                 return;
             }
         }
-
         for (let i = 0; i < boardSize; i++) {
             let columnMarked = true;
             for (let j = 0; j < boardSize; j++) {
@@ -83,7 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             if (columnMarked) {
-                alert("You have a full column! You win!");
+                messageElement.textContent = "ניצחת! השלמת טור.";
+                gameOver = true;
                 return;
             }
         }
@@ -91,8 +101,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function resetGame() {
         drawnNumbers.clear();
-        drawnNumberElement.textContent = "Drawn number";
+        drawnNumberElement.textContent = ":המספר שהוגרל";
         messageElement.textContent = "";
+        failClicks = 0;
+        gameOver = false;
         generateBoard();
     }
 
