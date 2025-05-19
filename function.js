@@ -27,8 +27,8 @@ export function validateShipSetup(ships, gridSize) {
 
 // Keep track of placed ships and their remaining hits
 let ships = []; // Array of ship objects with their positions and hits
-let remainingShips = new Map(); // Maps ship sizes to count of remaining ships
-let maxLives = 25; // Default max lives
+let remainingShips = new Map(); 
+let maxLives = 25; 
 let currentLives = maxLives;
 
 const difficultyLives = {
