@@ -11,8 +11,7 @@ const shipStatusTable = document.querySelector('.ship-status table');
 function updateShipStatus(shipSize) {
     if (!shipSize) return;
     
-    // Find the corresponding table row (shipSize maps to the row index)
-    // 5->0, 4->1, 3->2, 2->3, 1->4
+
     const rowIndex = 5 - shipSize;
     const countCell = shipStatusTable.rows[rowIndex].cells[1];
     const currentCount = parseInt(countCell.textContent);
@@ -22,7 +21,6 @@ function updateShipStatus(shipSize) {
 }
 
 function resetShipStatus() {
-    // Reset counts to initial values from inputs
     const ships = getShipCounts();
     ships.forEach((ship, index) => {
         shipStatusTable.rows[index].cells[1].textContent = ship.count;
@@ -30,29 +28,22 @@ function resetShipStatus() {
 }
 
 function disableGameSetup() {
-    // Disable grid size options
     gridOptions.forEach(radio => radio.disabled = true);
     
-    // Disable ship count inputs
     shipInputs.forEach(input => input.disabled = true);
     
-    // Hide start button and show reset button
     startButton.style.display = 'none';
     resetButton.style.display = 'inline-block';
 }
 
 function enableGameSetup() {
-    // Enable grid size options
     gridOptions.forEach(radio => radio.disabled = false);
     
-    // Enable ship count inputs
     shipInputs.forEach(input => input.disabled = false);
     
-    // Show start button and hide reset button
     startButton.style.display = 'inline-block';
     resetButton.style.display = 'none';
     
-    // Hide the game board
     gameBoards.classList.remove('show');
 }
 
@@ -68,11 +59,11 @@ startButton.addEventListener('click', () => {
     const ships = getShipCounts();
 
     if (validateShipSetup(ships, gridSize)) {
-        createGrid(gridSize, gameGrid); // Recreate grid with current size
+        createGrid(gridSize, gameGrid); 
         placeShipsOnGrid(ships, gridSize, gameGrid);
         gameBoards.classList.add('show'); // Show the game boards
-        resetShipStatus(); // Reset the ship status display
-        disableGameSetup(); // Disable controls after game starts
+        resetShipStatus();
+        disableGameSetup(); 
 
         // Add click handlers to grid cells
         const cells = gameGrid.children;
