@@ -208,7 +208,6 @@ export function handleCellClick(cell, position) {
     }
 }
 
-// Add this to your exports
 export function resetLives() {
     currentLives = maxLives;
     updateLivesDisplay();
