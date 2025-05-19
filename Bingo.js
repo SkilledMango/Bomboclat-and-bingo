@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetButton = document.getElementById("reset-button");
     const drawnNumberElement = document.getElementById("drawn-number");
     const messageElement = document.getElementById("message");
+    const failuresElement = document.getElementById("failures");
 
     let drawnNumbers = new Set();
     let boardNumbers = [];
@@ -60,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!drawnNumbers.has(number)) {
             failClicks++;
             messageElement.textContent = `המספר לא הוגרל! (${failClicks}/3)`;
+            failuresElement.textContent = `פסילות: ${failClicks}/3`;
             if (failClicks >= 3) {
                 messageElement.textContent = "נפסלת! לחצת 3 פעמים על מספרים שלא הוגרלו.";
                 gameOver = true;
@@ -104,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         drawnNumberElement.textContent = ":המספר שהוגרל";
         messageElement.textContent = "";
         failClicks = 0;
+        failuresElement.textContent = "פסילות: 0/3";
         gameOver = false;
         generateBoard();
     }
