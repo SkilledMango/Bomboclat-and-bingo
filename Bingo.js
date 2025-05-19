@@ -52,7 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
         } while (drawnNumbers.has(number));
         drawnNumbers.add(number);
         drawnNumberElement.textContent = `המספר שהוגרל: ${number}`;
-        messageElement.textContent = "";
+        // בדוק אם המספר מופיע בלוח
+        if (boardNumbers.includes(number)) {
+            messageElement.textContent = `המספר ${number} מופיע בלוח שלך!`;
+        } else {
+            messageElement.textContent = `המספר ${number} לא מופיע בלוח שלך.`;
+        }
     }
 
     function handleCellClick(cell) {
