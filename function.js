@@ -11,7 +11,7 @@ export function createGrid(size, gameGrid) {
 }
 
 export function getShipCounts() {
-    const shipSizes = [5, 4, 3, 2, 1]; // Order matches HTML: Aircraft Carrier(5), Battleship(4), Cruiser(3), Destroyer(2), Submarine(1)
+    const shipSizes = [5, 4, 3, 2, 1];
     const shipInputs = document.querySelectorAll('.ship-input input');
     return Array.from(shipInputs).map((input, index) => ({
         size: shipSizes[index],
@@ -77,7 +77,6 @@ export function placeShipsOnGrid(shipCounts, gridSize, gameGrid) {
                 }
 
                 if (shipCells.length === shipCount.size) {
-                    // Create a new ship object
                     const ship = {
                         id: shipId++,
                         size: shipCount.size,
